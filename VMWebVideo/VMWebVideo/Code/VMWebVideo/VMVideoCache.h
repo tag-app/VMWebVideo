@@ -73,6 +73,8 @@ typedef void(^VMWebVideoCalculateSizeBlock)(NSUInteger fileCount, NSUInteger tot
  */
 - (NSURL *)videoDataFilePathFromCacheForKey:(NSString *)key;
 
+- (NSData *)videoDataForKey:(NSString *)key;
+
 /**
  *  Check if image exists in disk cache already (does not load the image)
  *
