@@ -48,7 +48,7 @@
 }
 
 - (VMVideoCache *)createCache {
-    return [VMVideoCache sharedVidoeCache];
+    return [VMVideoCache sharedVideoCache];
 }
 
 - (NSString *)cacheKeyForURL:(NSURL *)url {

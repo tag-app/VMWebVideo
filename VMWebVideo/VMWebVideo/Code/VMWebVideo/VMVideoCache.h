@@ -54,7 +54,7 @@ typedef void(^VMWebVideoCalculateSizeBlock)(NSUInteger fileCount, NSUInteger tot
  */
 @property (assign, nonatomic) NSUInteger maxCacheSize;
 
-+ (VMVideoCache *)sharedVidoeCache;
++ (VMVideoCache *)sharedVideoCache;
 
 - (void)storeVideoDataToDiskInBackground:(NSData *)videoData forKey:(NSString *)key completion:(VMVideoCacheQueryFilePathCompletionBlock)completion;
 
