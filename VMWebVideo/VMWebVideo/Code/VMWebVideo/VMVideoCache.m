@@ -484,6 +484,6 @@ static const NSInteger kDefaultCacheMaxCacheAge = 60 * 60 * 24 * 7; // 1 week
 }
 
 #pragma mark - Singleton
-RUSingletonUtil_Synthesize_Singleton_Implementation(sharedVidoeCache);
+RUSingletonUtil_Synthesize_Singleton_Implementation(sharedVideoCache);
 
 @end
