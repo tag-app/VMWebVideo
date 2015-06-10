@@ -70,7 +70,7 @@
     NSString *key = [self cacheKeyForURL:url];
     
     [self.videoCache videoExistsWithKey:key completion:^(BOOL isInCache) {
-        dispatch_main_async_safe(^{
+        vm_dispatch_main_sync_safe(^{
             if(completionBlock) {
                 completionBlock(isInCache);
             }
@@ -105,7 +105,7 @@
     }
     
     if (!url || (!(options & VMWebVideoRetryFailed) && isFailedUrl)) {
-        dispatch_main_sync_safe(^{
+        vm_dispatch_main_sync_safe(^{
             NSError *error = [NSError errorWithDomain:NSURLErrorDomain code:NSURLErrorFileDoesNotExist userInfo:nil];
             completedBlock(nil, error, VMVideoCacheTypeNone, YES, url);
         });
@@ -129,7 +129,7 @@
         
         if ((!videoDataFilePath || options & VMWebVideoRefreshCached) && (![self.delegate respondsToSelector:@selector(videoManager:shouldDownloadVideoForURL:)] || [self.delegate videoManager:self shouldDownloadVideoForURL:url])) {
             if (videoDataFilePath && options & VMWebVideoRefreshCached) {
-                dispatch_main_sync_safe(^{
+                vm_dispatch_main_sync_safe(^{
                     // If video was found in the cache bug VMWebVideoRefreshCached is provided, notify about the cached video
                     // AND try to re-download it in order to let a chance to NSURLCache to refresh it from server.
                     completedBlock(videoDataFilePath, nil, cacheType, YES, url);
@@ -158,7 +158,7 @@
                     // if we would call the completedBlock, there could be a race condition between this block and another completedBlock for the same object, so if this one is called second, we will overwrite the new data
                 }
                 else if (error) {
-                    dispatch_main_sync_safe(^{
+                    vm_dispatch_main_sync_safe(^{
                         if (!weakOperation.isCancelled) {
                             completedBlock(nil, error, VMVideoCacheTypeNone, finished, url);
                         }
@@ -183,7 +183,7 @@
                         
                         NSURL *path = [self.videoCache videoDataFilePathFromCacheForKey:key];
                         
-                        dispatch_main_sync_safe(^{
+                        vm_dispatch_main_sync_safe(^{
                             if (!weakOperation.isCancelled) {
                                 completedBlock(path, nil, VMVideoCacheTypeNone, finished, url);
                             }
@@ -206,7 +206,7 @@
             };
         }
         else if (videoDataFilePath) {
-            dispatch_main_sync_safe(^{
+            vm_dispatch_main_sync_safe(^{
                 if (!weakOperation.isCancelled) {
                     completedBlock(videoDataFilePath, nil, cacheType, YES, url);
                 }
@@ -217,7 +217,7 @@
         }
         else {
             // video not in cache and download disallowed by delegate
-            dispatch_main_sync_safe(^{
+            vm_dispatch_main_sync_safe(^{
                 if (!weakOperation.isCancelled) {
                     completedBlock(nil, nil, VMVideoCacheTypeNone, YES, url);
                 }
